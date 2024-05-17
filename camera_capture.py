@@ -7,7 +7,7 @@ class Camera():
 		_, self.frame = self.vid.read() 
 		
 	def capture(self):
-		return frame
+		return self.frame
 
 
 		
