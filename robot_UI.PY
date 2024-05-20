@@ -1,90 +1,42 @@
 from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QGraphicsScene
-from qt_for_leafbot.LeafBot import Ui_LeafBotForm
-from PySide6.QtGui import QPixmap
+from LeafBot_ui import Ui_LeafBotForm
+from PySide6.QtGui import QPixmap,QImage
+from PySide6.QtCore import QTimer, Qt
 import qimage2ndarray
 import time
-import cv2
-import queue
-from threading import Thread
+from camera_capture import Camera
 
 """
 Camera类只负责从摄像头获取图像
 对图像的处理（包括显示）由外部定义
 """
 
-
-class Camera:
-    def __init__(self):
-        self.cam = cv2.VideoCapture(0)  # 获取摄像头
-        self.frame_queue = queue.LifoQueue()  # 帧队列
-        self.is_running = False  # 状态标签
-        self.fps = 0.0  # 实时帧率
-        self._t_last = time.time() * 1000
-        self._data = {}
-
-    def capture_queue(self):
-        # 捕获图像
-        self._t_last = time.time() * 1000
-        while self.is_running and self.cam.isOpened():
-            ret, frame = self.cam.read()
-            if not ret:
-                break
-            if self.frame_queue.qsize() < 1:
-                # 当队列中的图像都被消耗完后，再压如新的图像
-                t = time.time() * 1000
-                t_span = t - self._t_last
-                self.fps = int(1000.0 / t_span)
-                self._data["image"] = frame.copy()
-                self._data["fps"] = self.fps
-                self.frame_queue.put(self._data)
-                self._t_last = t
-
-    def run(self):
-        self.is_running = True
-        self.thread_capture = Thread(target=self.capture_queue)
-        self.thread_capture.start()
-
-    def stop(self):
-        self.is_running = False
-        self.cam.release()
-
-
-# 对于图像的处理方法
-def show_frame(frame):
-    while True:
-        # 根据实际需求，设置跳出循环（结束线程）的方法
-        data = frame.get()
-        image = data["image"]
-        cv2.putText(image, "fps:{fps}".format(fps=data["fps"]), (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0))
-        cv2.namedWindow("camera", cv2.WINDOW_AUTOSIZE)
-        cv2.imshow("camera", image)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-
-class LeafBot(QMainWindow, QWidget, Ui_LeafBotForm):
+class LeafBot(QWidget, Ui_LeafBotForm):
     def __init__(self):
         super().__init__()
-        # self.camera = Camera()
-        # self.timer = QTimer()
-        # self.timer.timeout.connect(self.showRgb)
-        # self.timer.timeout.connect(self.showRgb2)
-
-        # self.timer.start()
-
         self.setupUi(self)
+
+        self.camera = Camera()
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.showRgb)
+
+        self.timer.start(10)
+        self.show_img_width = self.graphicsView.width()
+        self.show_img_height = self.graphicsView.height()
+        print(self.show_img_width)
+        print(self.show_img_height)
+
+
 
     def showRgb(self):
         image = self.camera.capture()
         scene = QGraphicsScene(self)
-        scene.addPixmap(QPixmap.fromImage(qimage2ndarray.array2qimage(image)))
+        image = QImage(image, image.shape[1], image.shape[0], 
+                       image.strides[0], QImage.Format_RGB888)
+        image = QPixmap.fromImage(image)
+        image_scaled = QPixmap.scaled(image, self.show_img_width,self.show_img_height,Qt.IgnoreAspectRatio)
+        scene.addPixmap(image_scaled)
         self.graphicsView.setScene(scene)
-
-    def showRgb2(self):
-        image = self.camera.capture()
-        scene = QGraphicsScene(self)
-        scene.addPixmap(QPixmap.fromImage(qimage2ndarray.array2qimage(image)))
-        self.graphicsView_2.setScene(scene)
 
 
 if __name__ == '__main__':
