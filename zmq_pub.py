@@ -1,14 +1,17 @@
 # 发布者
 import zmq
 import time
- 
+from module.msg import Msg, ARMTASK
+
 context = zmq.Context()
 socket = context.socket(zmq.PUB)
-socket.bind("tcp://192.168.101.14:5555")
+socket.bind("tcp://127.0.0.1:5555")
 
 # while True:
 for i in range(1000):
-    news = "Breaking News! Time: {}".format(time.time())
+    msg = Msg()
+    msg.task = ARMTASK.MOVE_ALL_JOINT
+    news = msg
 
-    socket.send_string(news)
+    socket.send_pyobj(news)
     time.sleep(1)

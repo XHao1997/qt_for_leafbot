@@ -1512,7 +1512,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_21">
+         <widget class="QPushButton" name="pushButton_close_all">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -3712,7 +3712,7 @@
           </widget>
          </item>
          <item row="7" column="0">
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="pushButton_move_all">
            <property name="palette">
             <palette>
              <active>
@@ -3905,7 +3905,24 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_close_all</sender>
+   <signal>clicked()</signal>
+   <receiver>LeafBotForm</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>586</x>
+     <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
  </buttongroups>
