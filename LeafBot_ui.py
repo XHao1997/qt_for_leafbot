@@ -25,7 +25,7 @@ class Ui_LeafBotForm(object):
         if not LeafBotForm.objectName():
             LeafBotForm.setObjectName(u"LeafBotForm")
         LeafBotForm.setWindowModality(Qt.WindowModality.WindowModal)
-        LeafBotForm.resize(1184, 850)
+        LeafBotForm.resize(1184, 878)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1909,7 +1909,7 @@ class Ui_LeafBotForm(object):
         self.label_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layoutWidget = QWidget(self.gridFrame)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(720, 610, 255, 41))
+        self.layoutWidget.setGeometry(QRect(730, 660, 255, 41))
         self.horizontalLayout = QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -1946,7 +1946,7 @@ class Ui_LeafBotForm(object):
 
         self.label_showimg = QLabel(self.gridFrame)
         self.label_showimg.setObjectName(u"label_showimg")
-        self.label_showimg.setGeometry(QRect(650, 280, 491, 321))
+        self.label_showimg.setGeometry(QRect(680, 280, 461, 371))
         palette59 = QPalette()
         palette59.setBrush(QPalette.Active, QPalette.WindowText, brush8)
         palette59.setBrush(QPalette.Active, QPalette.Button, brush7)
@@ -2011,7 +2011,7 @@ class Ui_LeafBotForm(object):
         self.LeafBotLogo.raise_()
         self.label_2.raise_()
         self.layoutWidget.raise_()
-        self.widget.raise_()
+        self.widget1.raise_()
         self.label_showimg.raise_()
 
         self.retranslateUi(LeafBotForm)

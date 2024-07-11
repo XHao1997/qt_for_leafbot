@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1184</width>
-    <height>850</height>
+    <height>878</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -10220,8 +10220,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>610</y>
+      <x>730</x>
+      <y>660</y>
       <width>255</width>
       <height>41</height>
      </rect>
@@ -10350,10 +10350,10 @@
    <widget class="QLabel" name="label_showimg">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>680</x>
       <y>280</y>
-      <width>491</width>
-      <height>321</height>
+      <width>461</width>
+      <height>371</height>
      </rect>
     </property>
     <property name="palette">
